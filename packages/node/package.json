@@ -1,0 +1,12 @@
+{
+  "name": "mojo-proof-node",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "tsonic build --project tsonic.json" },
+  "devDependencies": {
+    "@tsonic/cli": "file:../../../tsonic/packages/cli",
+    "@tsonic/target-mojo": "file:../../../tsonic-mojo",
+    "@tsonic/mojo-runtime": "file:../../../mojo-runtime",
+    "@tsonic/mojo-nodejs": "file:../../../mojo-nodejs"
+  }
+}
