@@ -1,0 +1,22 @@
+{
+  "name": "mojo-pudding",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "build": "npm --workspaces --if-present run build",
+    "test": "bash scripts/verify.sh"
+  },
+  "devDependencies": {
+    "@tsonic/cli": "file:../tsonic/packages/cli",
+    "@tsonic/host": "file:../tsonic/packages/host",
+    "@tsonic/js-source-profile": "file:../tsonic/packages/js-source-profile",
+    "@tsonic/mojo-js": "file:../mojo-js",
+    "@tsonic/mojo-nodejs": "file:../mojo-nodejs",
+    "@tsonic/mojo-runtime": "file:../mojo-runtime",
+    "@tsonic/source-core": "file:../tsonic/packages/source-core",
+    "@tsonic/target-api": "file:../tsonic/packages/target-api",
+    "@tsonic/target-mojo": "file:../tsonic-mojo",
+    "@tsonic/tsts": "file:../tsonic/packages/tsts"
+  }
+}

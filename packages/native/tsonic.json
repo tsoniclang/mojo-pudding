@@ -1,0 +1,10 @@
+{
+  "$schema": "https://tsonic.org/schema/v1.json",
+  "entryPoint": "App.ts",
+  "rootDir": "src",
+  "outDir": "out",
+  "targets": [{
+    "id": "mojo",
+    "options": { "packageName": "mojo_proof_native", "outputType": "lib" }
+  }]
+}
