@@ -19,7 +19,7 @@ if [[ "$first_generation" != "$second_generation" ]]; then
   exit 1
 fi
 
-for project in native js node; do
+for project in native language resources workspace-app js node; do
   output="$REPO_ROOT/packages/$project/out/mojo"
   before_format="$(find "$output/src" -type f -name '*.mojo' -print0 | sort -z | xargs -0 sha256sum | sha256sum | cut -d' ' -f1)"
   "$PIXI_BIN" run --manifest-path "$output/pixi.toml" \
@@ -30,13 +30,13 @@ for project in native js node; do
     exit 1
   fi
   "$PIXI_BIN" run --manifest-path "$output/pixi.toml" build
-  includes=(-I "$output/src")
+  includes=(-I "$output/src" -I "$REPO_ROOT/../mojo-runtime/mojo")
   case "$project" in
     js)
-      includes+=(-I "$REPO_ROOT/../mojo-js/mojo" -I "$REPO_ROOT/../mojo-runtime/mojo")
+      includes+=(-I "$REPO_ROOT/../mojo-js/mojo")
       ;;
     node)
-      includes+=(-I "$REPO_ROOT/../mojo-nodejs/mojo" -I "$REPO_ROOT/../mojo-runtime/mojo")
+      includes+=(-I "$REPO_ROOT/../mojo-nodejs/mojo")
       ;;
   esac
   "$PIXI_BIN" run --manifest-path "$output/pixi.toml" \
