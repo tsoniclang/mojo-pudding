@@ -1,0 +1,9 @@
+{
+  "name": "@mojo-proof/workspace-library",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./math.js": "./src/math.ts"
+  }
+}
