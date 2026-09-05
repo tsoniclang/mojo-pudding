@@ -1,5 +1,6 @@
 import type { i32 } from "@tsonic/mojo/types.js";
 export { nestedInvocationErrorProof } from "./error-domains.js";
+export { numericOperatorsProof, numericMutationProof } from "./numeric.js";
 
 interface Pair {
   left: i32;
