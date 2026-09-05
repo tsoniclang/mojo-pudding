@@ -43,3 +43,18 @@ export function languageProof(): i32 {
   }
   return identity<i32>(counter.increment()) + 4;
 }
+
+export function nestedFinallyProof(fail: boolean): i32 {
+  let result: i32 = 0;
+  try {
+    try {
+      if (fail) throw new Error("expected");
+      result += 1;
+    } catch {
+      result += 2;
+    }
+  } finally {
+    result += 3;
+  }
+  return result;
+}

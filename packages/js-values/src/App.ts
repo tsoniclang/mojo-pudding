@@ -42,3 +42,44 @@ export function erasedCallbackBridgeProof(): number {
   const mapped = [1].map(alias);
   return same ? mapped[0] : -1;
 }
+
+class MutableText {
+  value: string = "before";
+  count: number = 0;
+}
+
+function mutateText(value: MutableText): string {
+  value.value = "after";
+  value.count += 1;
+  return "tail";
+}
+
+function joinText(first: string, second: string): string {
+  return first + "|" + second;
+}
+
+export function argumentValueProof(): string {
+  const value = new MutableText();
+  return joinText(value.value, mutateText(value));
+}
+
+export function argumentAssignmentProof(): string {
+  let value = "before";
+  return joinText(value, value = "after");
+}
+
+export function templateValueProof(): string {
+  const value = new MutableText();
+  return `${value.value}|${mutateText(value)}`;
+}
+
+export function templateBoundaryOrderProof(): number {
+  const value = new MutableText();
+  const invalid: unknown = JSON.parse('"\\ud800"');
+  try {
+    `${invalid}${mutateText(value)}`;
+  } catch {
+    return value.count;
+  }
+  return -1;
+}
