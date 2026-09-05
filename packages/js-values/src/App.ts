@@ -68,6 +68,16 @@ export function argumentAssignmentProof(): string {
   return joinText(value, value = "after");
 }
 
+function preserveText(value: string): string {
+  return value;
+}
+
+export function nativeCallablePreludeProof(fail: boolean): string {
+  if (fail) throw new Error("intentional");
+  const selected = preserveText;
+  return selected(decodeURIComponent("%41"));
+}
+
 export function templateValueProof(): string {
   const value = new MutableText();
   return `${value.value}|${mutateText(value)}`;
