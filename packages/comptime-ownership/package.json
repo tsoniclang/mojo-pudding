@@ -1,0 +1,11 @@
+{
+  "name": "mojo-proof-comptime-ownership",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "tsonic build --project tsonic.json" },
+  "devDependencies": {
+    "@tsonic/cli": "file:../../../tsonic/packages/cli",
+    "@tsonic/target-mojo": "file:../../../tsonic-mojo",
+    "@tsonic/mojo-runtime": "file:../../../mojo-runtime"
+  }
+}
