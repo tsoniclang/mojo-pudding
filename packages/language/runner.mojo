@@ -7,6 +7,7 @@ from mojo_proof_language import (
     nested_finally_proof,
     nested_invocation_error_proof,
     numeric_operators_proof,
+    floating_bitwise_proof,
     raw_pointer_same,
     raw_pointer_hash,
     native_byte_copy,
@@ -40,6 +41,7 @@ def main() raises:
     assert_equal(raw_pointer_hash(first_address), raw_pointer_hash(same_address))
     assert_equal(raw_pointer_hash(absent_address), Float64(0))
     var bitwise = numeric_operators_proof(-1.0, 1.0)
+    assert_equal(floating_bitwise_proof(Float16(-1), Float32(1)), Float64(2147483647))
     var expected: List[Float64] = [0.0, 1.0, -1.0, -2.0, -2.0, -1.0, 2147483647.0]
     for index in range(len(expected)):
         assert_equal(bitwise[index], expected[index])
