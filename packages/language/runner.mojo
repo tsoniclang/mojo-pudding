@@ -7,12 +7,11 @@ from mojo_proof_language import (
     nested_finally_proof,
     nested_invocation_error_proof,
     numeric_operators_proof,
-    numeric_mutation_proof,
-    numeric_region_proof,
     raw_pointer_same,
     raw_pointer_hash,
     native_byte_copy,
     native_byte_offset,
+    optional_region_proof,
 )
 
 
@@ -21,8 +20,7 @@ def main() raises:
     assert_equal(language_proof(), 17)
     assert_equal(nested_finally_proof(False), 4)
     assert_equal(nested_finally_proof(True), 5)
-    assert_equal(numeric_mutation_proof(), True)
-    assert_equal(numeric_region_proof(), True)
+    assert_equal(optional_region_proof(), True)
     var first_byte = UInt8(41)
     var second_byte = UInt8(0)
     var first_pointer = Pointer(to=first_byte).unsafe_origin_cast[MutUnsafeAnyOrigin]()

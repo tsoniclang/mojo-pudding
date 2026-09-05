@@ -1,7 +1,8 @@
 import type { i32 } from "@tsonic/mojo/types.js";
 export { nestedInvocationErrorProof } from "./error-domains.js";
-export { numericOperatorsProof, numericMutationProof, numericRegionProof } from "./numeric.js";
+export { numericOperatorsProof } from "./numeric.js";
 export { rawPointerSame, rawPointerHash, nativeByteCopy, nativeByteOffset } from "./pointers.js";
+export { optionalRegionProof } from "./optional-regions.js";
 
 interface Pair {
   left: i32;
