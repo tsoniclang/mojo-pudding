@@ -49,11 +49,12 @@ class IntegerCell {
 export function numericRegionProof(): boolean {
   let calls = 0;
   function amount(): number { calls += 1; return 1.9; }
+  function count(): number { return calls; }
   let value = 7;
   const enabled = false;
   const skipped = enabled && (value <<= amount()) > 0;
-  if (skipped || value !== 7 || calls !== 0) return false;
+  if (skipped || value !== 7 || count() !== 0) return false;
   const cell = new IntegerCell();
   const assigned = cell.value <<= amount();
-  return assigned === 14 && cell.value === 14 && calls === 1;
+  return assigned === 14 && cell.value === 14 && count() === 1;
 }
