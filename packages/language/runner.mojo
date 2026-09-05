@@ -6,6 +6,7 @@ from mojo_proof_language import (
     nested_invocation_error_proof,
     numeric_operators_proof,
     numeric_mutation_proof,
+    numeric_region_proof,
 )
 
 
@@ -15,8 +16,9 @@ def main() raises:
     assert_equal(nested_finally_proof(False), 4)
     assert_equal(nested_finally_proof(True), 5)
     assert_equal(numeric_mutation_proof(), True)
+    assert_equal(numeric_region_proof(), True)
     var bitwise = numeric_operators_proof(-1.0, 1.0)
-    var expected = List[Float64](0.0, 1.0, -1.0, -2.0, -2.0, -1.0, 2147483647.0)
+    var expected: List[Float64] = [0.0, 1.0, -1.0, -2.0, -2.0, -1.0, 2147483647.0]
     for index in range(len(expected)):
         assert_equal(bitwise[index], expected[index])
     for shape in range(5):
