@@ -3,4 +3,4 @@ from mojo_proof_js import message
 
 
 def main() raises:
-    assert_equal(message().to_native_strict(), "hello from Mojo")
+    assert_equal(message(), "hello from Mojo")
