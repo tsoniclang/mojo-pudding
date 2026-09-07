@@ -12,11 +12,21 @@ output="$REPO_ROOT/packages/$project/out/mojo"
 mkdir -p "$REPO_ROOT/.temp/verification"
 format_root="$(mktemp -d "$REPO_ROOT/.temp/verification/format-$project-XXXXXXXX")"
 cp -a "$output/src" "$format_root/src"
-"$PIXI_BIN" run --manifest-path "$output/pixi.toml" mojo format --quiet "$format_root/src"
+if [[ -d "$output/components" ]]; then
+  cp -a "$output/components" "$format_root/components"
+fi
+mapfile -d '' format_sources < <(find "$format_root" -type f -name '*.mojo' -print0 | sort -z)
+test "${#format_sources[@]}" -gt 0
+"$PIXI_BIN" run --manifest-path "$output/pixi.toml" mojo format --quiet "${format_sources[@]}"
 if ! diff -qr "$output/src" "$format_root/src"; then
   printf 'Generated Mojo source is not formatter-stable: %s\n' "$project" >&2
   exit 1
 fi
+if [[ -d "$output/components" ]] && ! diff -qr "$output/components" "$format_root/components"; then
+  printf 'Generated Mojo components are not formatter-stable: %s\n' "$project" >&2
+  exit 1
+fi
+printf 'Formatter checked %s generated modules: %s\n' "${#format_sources[@]}" "$project"
 "$PIXI_BIN" run --manifest-path "$output/pixi.toml" build
 includes=(-I "$output/src" -I "$REPO_ROOT/../mojo-runtime/mojo")
 if [[ -d "$output/build/components" ]]; then

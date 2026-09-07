@@ -1,3 +1,7 @@
+export { numericMutationProof, numericRegionProof } from "./numeric.js";
+export { optionalArrayProof, optionalUnionMapProof } from "./optional-regions.js";
+export { templatePrimitiveProof } from "./template-primitives.js";
+
 class JsonBox {
   value: string;
 
