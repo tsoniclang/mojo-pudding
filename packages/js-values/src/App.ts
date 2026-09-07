@@ -1,5 +1,5 @@
 export { numericMutationProof, numericRegionProof } from "./numeric.js";
-export { optionalArrayProof } from "./optional-regions.js";
+export { optionalArrayProof, optionalUnionMapProof } from "./optional-regions.js";
 
 class JsonBox {
   value: string;

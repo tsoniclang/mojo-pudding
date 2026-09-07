@@ -10,3 +10,29 @@ export function optionalArrayProof(): boolean {
   if (optionalElement([13], index) !== 13 || count() !== 1) return false;
   return true;
 }
+
+class FirstValue { first = "first"; }
+class SecondValue { second = "second"; }
+
+export function optionalUnionMapProof(): boolean {
+  const values = new Map<string, FirstValue | SecondValue>();
+  const first = new FirstValue();
+  const second = new SecondValue();
+  values.set("first", first);
+  values.set("second", second);
+  let calls = 0;
+  const count = (): number => calls;
+  const key = (value: string): string => { calls += 1; return value; };
+  const absent = values.get(key("missing"));
+  if (absent !== undefined || count() !== 1) return false;
+  const selectedFirst = values.get(key("first"));
+  if (!(selectedFirst instanceof FirstValue) || selectedFirst !== first || count() !== 2) return false;
+  const selectedSecond = values.get(key("second"));
+  if (!(selectedSecond instanceof SecondValue) || selectedSecond !== second || count() !== 3) return false;
+  const primitives = new Map<string, string | number>();
+  primitives.set("text", "value");
+  primitives.set("number", 7);
+  if (primitives.get("missing") !== undefined) return false;
+  if (primitives.get("text") !== "value" || primitives.get("number") !== 7) return false;
+  return true;
+}
