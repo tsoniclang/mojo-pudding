@@ -11,6 +11,7 @@ from mojo_proof_js_values import (
     numeric_region_proof,
     optional_array_proof,
     optional_union_map_proof,
+    template_primitive_proof,
     structural_value_proof,
     template_boundary_order_proof,
     template_value_proof,
@@ -32,3 +33,4 @@ def main() raises:
     assert_equal(numeric_region_proof(), True)
     assert_equal(optional_array_proof(), True)
     assert_equal(optional_union_map_proof(), True)
+    assert_equal(template_primitive_proof(), True)
