@@ -10,9 +10,10 @@ class ConvertedValues {
 
 export function conversionEffectsProof(): boolean {
   const state = new ConvertedValues();
-  const returned = (): int32[] => [1];
-  const local: int32[] = [2];
-  return state.values[0] === 0 && returned()[0] === 1 && local[0] === 2;
+  const source: number[] = [1, 2];
+  const returned = (): int32[] => source;
+  const local: int32[] = source;
+  return state.values[0] === 0 && returned()[0] === 1 && local[1] === 2;
 }
 
 export function stringBoundaryProof(): boolean {
