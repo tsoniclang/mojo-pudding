@@ -39,7 +39,7 @@ export function restCollectionProof(): boolean {
   optional(undefined, effects);
   if (effects.length !== 0) return false;
   optional([], effects);
-  if (effects.length !== 1) return false;
+  if (effects.join("|") !== "late") return false;
   const spliced = ["a", "b", "c"];
   const removed = spliced.splice(1);
   return removed.join("|") === "b|c" && spliced.join("|") === "a" &&
