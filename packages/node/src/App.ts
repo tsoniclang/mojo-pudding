@@ -1,6 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join, normalize, resolve } from "node:path";
 
+export { cryptoProviderProof } from "./crypto.js";
+
 function loadText(path: string): string {
   return readFileSync(path, "utf8");
 }
