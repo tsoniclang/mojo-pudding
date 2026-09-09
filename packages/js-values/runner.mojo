@@ -1,6 +1,8 @@
 from std.testing import assert_equal
 import mojo_proof_js_values
 from mojo_proof_js_values import (
+    conversion_effects_proof,
+    string_boundary_proof,
     array_stringification_proof,
     array_ordering_proof,
     array_copy_proof,
@@ -46,3 +48,5 @@ def main() raises:
     assert_equal(array_copy_proof(), True)
     assert_equal(array_index_proof(), True)
     assert_equal(array_mutation_proof(), True)
+    assert_equal(conversion_effects_proof(), True)
+    assert_equal(string_boundary_proof(), True)
