@@ -36,3 +36,22 @@ export function intlDateTimeProof(): boolean {
   if (resolved.timeZone !== "changed" || formatter.resolvedOptions().timeZone !== "UTC") return false;
   return true;
 }
+
+export function intlNumberProof(): boolean {
+  const options = { style: "currency" as const, currency: "USD" };
+  const formatter = new Intl.NumberFormat("en-US", options);
+  const alias = formatter;
+  options.currency = "JPY";
+  if (alias.format(12.5) !== "$12.50") return false;
+  const parts = formatter.formatToParts(12.5);
+  let joined = "";
+  let sawCurrency = false;
+  for (const part of parts) {
+    joined += part.value;
+    if (part.type === "currency") sawCurrency = true;
+  }
+  if (!sawCurrency || joined !== formatter.format(12.5)) return false;
+  const first = parts[0];
+  first.value = "changed";
+  return parts[0].value === "changed" && formatter.format(12.5) === "$12.50";
+}
