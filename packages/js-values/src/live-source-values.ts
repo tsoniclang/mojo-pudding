@@ -18,6 +18,11 @@ class PrivateState {
 
 function boxToken<T>(token: Token<T>): unknown { return token; }
 
+class Base { first = 1; }
+class Middle extends Base { middle = 2; }
+class Leaf extends Middle { last = 3; }
+function retainBase(value: Base): unknown { return value; }
+
 function preserve(value: unknown): unknown { return value; }
 
 export function liveSourceValueProof(): boolean {
@@ -42,6 +47,10 @@ export function liveSourceValueProof(): boolean {
   if (JSON.stringify(savedToken) !== '{"count":4}') return false;
   const privateState = new PrivateState();
   if (privateState.read() !== 1 || Object.keys(privateState).join("|") !== "visible") return false;
+  const leaf = new Leaf();
+  const savedBase = retainBase(leaf);
+  leaf.last = 4;
+  if (JSON.stringify(savedBase) !== '{"first":1,"middle":2,"last":4}' || !Object.is(savedBase, retainBase(leaf))) return false;
   const head = new Link();
   head.next = head;
   const recursive: unknown = head;
