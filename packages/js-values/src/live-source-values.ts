@@ -23,6 +23,12 @@ class Middle extends Base { middle = 2; }
 class Leaf extends Middle { last = 3; }
 function retainBase(value: Base): unknown { return value; }
 
+class Options {
+  own = 1;
+  reads = 0;
+  get inherited(): number { this.reads += 1; return 2; }
+}
+
 function preserve(value: unknown): unknown { return value; }
 
 export function liveSourceValueProof(): boolean {
@@ -51,6 +57,11 @@ export function liveSourceValueProof(): boolean {
   const savedBase = retainBase(leaf);
   leaf.last = 4;
   if (JSON.stringify(savedBase) !== '{"first":1,"middle":2,"last":4}' || !Object.is(savedBase, retainBase(leaf))) return false;
+  const options = new Options();
+  if (JSON.stringify(options) !== '{"own":1,"reads":0}' || options.reads !== 0) return false;
+  if (JSON.stringify(options, ["inherited", "own", "inherited"]) !== '{"inherited":2,"own":1}' || options.reads !== 1) return false;
+  const nested = { own: { keep: 2, drop: 3 }, keep: 4, drop: 5 };
+  if (JSON.stringify(nested, ["own", "keep"]) !== '{"own":{"keep":2},"keep":4}') return false;
   const head = new Link();
   head.next = head;
   const recursive: unknown = head;
