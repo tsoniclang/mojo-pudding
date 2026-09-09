@@ -14,3 +14,25 @@ export function intlCollatorProof(): boolean {
   if (resolved.numeric !== false || german.resolvedOptions().numeric !== true) return false;
   return true;
 }
+
+export function intlDateTimeProof(): boolean {
+  const options = { timeZone: "UTC" };
+  const formatter = new Intl.DateTimeFormat("en-US", options);
+  options.timeZone = "-01:00";
+  const alias = formatter;
+  if (alias.format(new Date(0)) !== "1/1/1970") return false;
+  let joined = "";
+  const parts = formatter.formatToParts(0);
+  for (const part of parts) joined += part.value;
+  if (joined !== formatter.format(0)) return false;
+  const first = parts[0];
+  first.value = "changed";
+  if (parts[0].value !== "changed") return false;
+  const resolved = formatter.resolvedOptions();
+  const originalZone = resolved.timeZone;
+  if (resolved.locale !== "en-US" || resolved.calendar !== "gregory" || originalZone !== "UTC") return false;
+  const saved = resolved;
+  saved.timeZone = "changed";
+  if (resolved.timeZone !== "changed" || formatter.resolvedOptions().timeZone !== "UTC") return false;
+  return true;
+}
