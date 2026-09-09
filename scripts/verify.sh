@@ -31,7 +31,8 @@ for project in \
   js-values \
   regexp-unicode \
   node \
-  node-capabilities; do
+  node-capabilities \
+  node-worker; do
   log="$REPO_ROOT/.temp/verification/$project.log"
   if timeout "${MOJO_PROOF_TIMEOUT:-10m}" prlimit --as="${MOJO_PROOF_MEMORY:-12884901888}" -- \
     bash "$REPO_ROOT/scripts/verify-project.sh" "$project" >"$log" 2>&1; then
@@ -41,5 +42,5 @@ for project in \
     failed=$((failed + 1))
   fi
 done
-echo "Mojo Pudding: $((11 - failed))/11 projects passed; $failed failed."
+echo "Mojo Pudding: $((12 - failed))/12 projects passed; $failed failed."
 test "$failed" -eq 0

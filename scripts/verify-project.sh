@@ -5,7 +5,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PIXI_BIN="${PIXI_BIN:-/home/jeswin/.pixi/bin/pixi}"
 project="${1:?Expected one proof project}"
 case "$project" in
-  native|language|project-dispatch|resources|comptime-ownership|workspace-app|js|js-values|regexp-unicode|node|node-capabilities) ;;
+  native|language|project-dispatch|resources|comptime-ownership|workspace-app|js|js-values|regexp-unicode|node|node-capabilities|node-worker) ;;
   *) echo "Unknown proof project: $project" >&2; exit 1 ;;
 esac
 output="$REPO_ROOT/packages/$project/out/mojo"
@@ -28,6 +28,14 @@ if [[ -d "$output/components" ]] && ! diff -qr "$output/components" "$format_roo
 fi
 printf 'Formatter checked %s generated modules: %s\n' "${#format_sources[@]}" "$project"
 "$PIXI_BIN" run --manifest-path "$output/pixi.toml" build
+if [[ "$project" == "node-worker" ]]; then
+  actual="$("$output/build/mojo_proof_node_worker")"
+  if [[ "$actual" != "worker-ok" ]]; then
+    printf 'Worker proof returned an unexpected result: %s\n' "$actual" >&2
+    exit 1
+  fi
+  exit 0
+fi
 includes=(-I "$output/src" -I "$REPO_ROOT/../mojo-runtime/mojo")
 if [[ -d "$output/build/components" ]]; then
   while IFS= read -r -d '' component; do
