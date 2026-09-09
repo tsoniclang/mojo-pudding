@@ -8,7 +8,7 @@ if (manifestPath === undefined || outputRoot === undefined || condaPrefix === un
 
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 requireRecord(manifest, "native build manifest");
-if (manifest.schemaVersion !== 2) {
+if (manifest.schemaVersion !== 3) {
   throw new Error(`Unsupported Mojo native build schema '${String(manifest.schemaVersion)}'.`);
 }
 const arguments_ = [];

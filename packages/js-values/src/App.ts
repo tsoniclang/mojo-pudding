@@ -2,6 +2,10 @@ export { numericMutationProof, numericRegionProof } from "./numeric.js";
 export { optionalArrayProof, optionalUnionMapProof } from "./optional-regions.js";
 export { templatePrimitiveProof } from "./template-primitives.js";
 export { restCollectionProof } from "./rest-collections.js";
+export {
+  arrayStringificationProof, arrayOrderingProof, arrayCopyProof, arrayIndexProof,
+  arrayMutationProof,
+} from "./array-semantics.js";
 
 class JsonBox {
   value: string;

@@ -1,6 +1,11 @@
 from std.testing import assert_equal
 import mojo_proof_js_values
 from mojo_proof_js_values import (
+    array_stringification_proof,
+    array_ordering_proof,
+    array_copy_proof,
+    array_index_proof,
+    array_mutation_proof,
     argument_assignment_proof,
     argument_value_proof,
     erased_callback_bridge_proof,
@@ -36,3 +41,8 @@ def main() raises:
     assert_equal(optional_union_map_proof(), True)
     assert_equal(template_primitive_proof(), True)
     assert_equal(rest_collection_proof(), True)
+    assert_equal(array_stringification_proof(), True)
+    assert_equal(array_ordering_proof(), True)
+    assert_equal(array_copy_proof(), True)
+    assert_equal(array_index_proof(), True)
+    assert_equal(array_mutation_proof(), True)
