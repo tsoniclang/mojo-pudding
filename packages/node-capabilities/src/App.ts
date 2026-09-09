@@ -3,6 +3,7 @@ import { EventEmitter, listenerCount } from "node:events";
 import { TextDecoder } from "node:util";
 import { gunzipSync, gzipSync } from "node:zlib";
 export { streamProof, modernUrlProof } from "./filesystem-url.js";
+export { fileContentsProof } from "./file-contents.js";
 
 export function compressionProof(): string {
   const compressed = gzipSync(Buffer.from("payload"), {
@@ -22,4 +23,17 @@ export function eventProof(): number {
   emitter.emit("ready");
   emitter.emit("ready");
   return before * 10 + calls;
+}
+
+export function eventOrderingProof(): number {
+  let order = 0;
+  const emitter = new EventEmitter();
+  const repeated = (): void => { order = order * 10 + 1; };
+  emitter.on("ready", repeated);
+  emitter.prependOnceListener("ready", (_value: unknown): void => { order = order * 10 + 2; });
+  emitter.on("ready", repeated);
+  emitter.off("ready", repeated);
+  emitter.emit("ready", 42);
+  emitter.emit("ready", 43);
+  return order;
 }

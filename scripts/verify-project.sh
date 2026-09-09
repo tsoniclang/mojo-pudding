@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PIXI_BIN="${PIXI_BIN:-/home/jeswin/.pixi/bin/pixi}"
+PIXI_BIN="${PIXI_BIN:-pixi}"
 project="${1:?Expected one proof project}"
 case "$project" in
   native|language|project-dispatch|resources|comptime-ownership|workspace-app|js|js-values|regexp-unicode|node|node-capabilities|node-worker) ;;
