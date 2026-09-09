@@ -2,6 +2,7 @@ export { numericMutationProof, numericRegionProof } from "./numeric.js";
 export { optionalArrayProof, optionalUnionMapProof } from "./optional-regions.js";
 export { templatePrimitiveProof } from "./template-primitives.js";
 export { restCollectionProof } from "./rest-collections.js";
+export { liveSourceValueProof } from "./live-source-values.js";
 export {
   arrayStringificationProof, arrayOrderingProof, arrayCopyProof, arrayIndexProof,
   arrayMutationProof,

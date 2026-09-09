@@ -1,6 +1,7 @@
 from std.testing import assert_equal
 import mojo_proof_js_values
 from mojo_proof_js_values import (
+    live_source_value_proof,
     live_iterator_proof,
     iterator_mutation_proof,
     conversion_effects_proof,
@@ -30,6 +31,7 @@ from mojo_proof_js_values import (
 
 def main() raises:
     mojo_proof_js_values._initialize_tsonic_package()
+    assert_equal(live_source_value_proof(), True)
     assert_equal(json_projection_proof(), '{"nested":"nested:value"}')
     assert_equal(structural_value_proof(), "after")
     assert_equal(immediate_callback_proof(), 18.0)
