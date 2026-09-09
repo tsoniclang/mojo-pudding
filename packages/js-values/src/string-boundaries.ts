@@ -17,13 +17,15 @@ export function conversionEffectsProof(): boolean {
 }
 
 export function stringBoundaryProof(): boolean {
+  const infinity = Number.POSITIVE_INFINITY;
+  const nan = Number.NaN;
   let rejected = 0;
   try { "😀".charAt(0); } catch { rejected++; }
   try { "😀".slice(0, 1); } catch { rejected++; }
   try { String.fromCharCode(0xD800); } catch { rejected++; }
   return rejected === 3 && "😀".slice(0, 2) === "😀" &&
-    "abc".charAt(Infinity) === "" && "abc".at(-Infinity) === undefined &&
-    "abc".charAt(NaN) === "a" && "ababa".lastIndexOf("a", NaN) === 4 &&
+    "abc".charAt(infinity) === "" && "abc".at(-infinity) === undefined &&
+    "abc".charAt(nan) === "a" && "ababa".lastIndexOf("a", nan) === 4 &&
     "a,b,c".split(",", -1).length === 3 &&
-    "a,b,c".split(",", Infinity).length === 0;
+    "a,b,c".split(",", infinity).length === 0;
 }
