@@ -2,6 +2,7 @@ import { Buffer } from "node:buffer";
 import { EventEmitter, listenerCount } from "node:events";
 import { TextDecoder } from "node:util";
 import { gunzipSync, gzipSync } from "node:zlib";
+export { streamProof, modernUrlProof } from "./filesystem-url.js";
 
 export function compressionProof(): string {
   const compressed = gzipSync(Buffer.from("payload"), {

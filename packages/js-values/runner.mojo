@@ -1,6 +1,8 @@
 from std.testing import assert_equal
 import mojo_proof_js_values
 from mojo_proof_js_values import (
+    live_iterator_proof,
+    iterator_mutation_proof,
     conversion_effects_proof,
     string_boundary_proof,
     array_stringification_proof,
@@ -50,3 +52,5 @@ def main() raises:
     assert_equal(array_mutation_proof(), True)
     assert_equal(conversion_effects_proof(), True)
     assert_equal(string_boundary_proof(), True)
+    assert_equal(live_iterator_proof(), "one|updated|again")
+    assert_equal(iterator_mutation_proof(), "023")

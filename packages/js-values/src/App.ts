@@ -103,3 +103,4 @@ export function templateBoundaryOrderProof(): number {
   return -1;
 }
 export { conversionEffectsProof, stringBoundaryProof } from "./string-boundaries.js";
+export { liveIteratorProof, iteratorMutationProof } from "./collection-iteration.js";
