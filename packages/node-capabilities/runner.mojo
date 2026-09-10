@@ -5,6 +5,7 @@ from mojo_proof_node_capabilities import compression_proof, event_proof, event_o
 from mojo_proof_node_capabilities import buffer_allocation_proof
 from mojo_proof_node_capabilities import stream_state_proof
 from mojo_proof_node_capabilities import begin_stream_completion
+from mojo_proof_node_capabilities import stream_read_sizes_proof
 from tsonic_node.event_loop import run_event_loop
 
 
@@ -16,6 +17,7 @@ def main() raises:
     assert_equal(modern_url_proof(), "hello world|https://example.org/result")
     var root = mkdtemp(prefix="mojo-pudding-stream-")
     try:
+        assert_equal(stream_read_sizes_proof(root), "abc|def|gh")
         var completion = begin_stream_completion(root)
         assert_equal(completion.call(()), "")
         run_event_loop()

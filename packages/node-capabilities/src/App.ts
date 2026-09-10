@@ -7,6 +7,7 @@ export { fileContentsProof } from "./file-contents.js";
 export { bufferAllocationProof } from "./buffer-allocation.js";
 export { streamStateProof } from "./stream-state.js";
 export { beginStreamCompletion } from "./stream-completion.js";
+export { streamReadSizesProof } from "./stream-read-sizes.js";
 
 export function compressionProof(): string {
   const compressed = gzipSync(Buffer.from("payload"), {
