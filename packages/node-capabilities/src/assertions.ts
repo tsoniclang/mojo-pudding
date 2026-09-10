@@ -1,5 +1,6 @@
 import { deepStrictEqual, strictEqual, notStrictEqual } from "node:assert";
 import { Buffer } from "node:buffer";
+import type { int64, uint64 } from "@tsonic/core/types.js";
 
 class Counter {
   count = 1;
@@ -32,6 +33,19 @@ export function assertionProof(): boolean {
   deepStrictEqual(new GenericCounter<number>(), new GenericCounter<string>());
   deepStrictEqual({ name: "proof", values: [1, 2] }, { values: [1, 2], name: "proof" });
   deepStrictEqual(Buffer.from("bytes"), Buffer.from("bytes"));
+  const large: uint64 = 9007199254740993n;
+  const previous: uint64 = 9007199254740992n;
+  const retainedInteger: unknown = large;
+  deepStrictEqual(retainedInteger, large);
+  const signedOne: int64 = 1n;
+  const unsignedOne: uint64 = 1n;
+  deepStrictEqual(signedOne, unsignedOne);
+  let integerRejected = false;
+  try { deepStrictEqual(retainedInteger, previous); } catch { integerRejected = true; }
+  strictEqual(integerRejected, true);
+  let jsonRejected = false;
+  try { JSON.stringify({ exact: large }); } catch { jsonRejected = true; }
+  strictEqual(jsonRejected, true);
   const left = new Link(); left.next = left;
   const right = new Link(); right.next = right;
   deepStrictEqual(left, right);
