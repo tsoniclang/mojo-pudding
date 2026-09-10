@@ -11,6 +11,7 @@ export { streamReadSizesProof } from "./stream-read-sizes.js";
 export { pathGlobProof } from "./path-glob.js";
 export { bufferValueProof } from "./buffer-values.js";
 export { streamDecodingProof } from "./stream-decoding.js";
+export { beginReadline } from "./readline.js";
 
 export function compressionProof(): string {
   const compressed = gzipSync(Buffer.from("payload"), {
