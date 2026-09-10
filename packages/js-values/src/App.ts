@@ -1,7 +1,7 @@
 export { numericMutationProof, numericRegionProof } from "./numeric.js";
 export { runtimeCategoryProof } from "./runtime-categories.js";
 export { structuredCloneProof } from "./structured-clone.js";
-export { optionalArrayProof, optionalUnionMapProof } from "./optional-regions.js";
+export { optionalArrayProof, optionalUnionMapProof, optionalBooleanProof } from "./optional-regions.js";
 export { templatePrimitiveProof } from "./template-primitives.js";
 export { restCollectionProof } from "./rest-collections.js";
 export { bufferValueProof } from "./buffer-values.js";

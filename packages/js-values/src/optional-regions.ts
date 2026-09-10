@@ -2,6 +2,28 @@ function optionalElement(values: number[] | undefined, index: () => number): num
   return values?.[index()] ?? -1;
 }
 
+function optionalBooleanResult(value: boolean | undefined): string {
+  let calls = 0;
+  const next = (): boolean | undefined => { calls += 1; return value; };
+  const count = (): number => calls;
+  const negated = !next();
+  const selected = next() ? "yes" : "no";
+  if (count() !== 2) return "repeated";
+  return (negated ? "not" : "yes") + "|" + selected;
+}
+
+function unionBooleanResult(value: boolean | string): boolean {
+  return !value;
+}
+
+export function optionalBooleanProof(): boolean {
+  if (optionalBooleanResult(undefined) !== "not|no") return false;
+  if (optionalBooleanResult(false) !== "not|no") return false;
+  if (optionalBooleanResult(true) !== "yes|yes") return false;
+  return unionBooleanResult(false) && !unionBooleanResult(true) &&
+    unionBooleanResult("") && !unionBooleanResult("text");
+}
+
 export function optionalArrayProof(): boolean {
   let calls = 0;
   const count = (): number => calls;

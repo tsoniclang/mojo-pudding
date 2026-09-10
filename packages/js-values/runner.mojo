@@ -28,6 +28,7 @@ from mojo_proof_js_values import (
     numeric_mutation_proof,
     numeric_region_proof,
     optional_array_proof,
+    optional_boolean_proof,
     optional_union_map_proof,
     template_primitive_proof,
     rest_collection_proof,
@@ -63,6 +64,7 @@ def main() raises:
     assert_equal(numeric_mutation_proof(), True)
     assert_equal(numeric_region_proof(), True)
     assert_equal(optional_array_proof(), True)
+    assert_equal(optional_boolean_proof(), True)
     assert_equal(optional_union_map_proof(), True)
     assert_equal(template_primitive_proof(), True)
     assert_equal(rest_collection_proof(), True)
