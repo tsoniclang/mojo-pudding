@@ -1,4 +1,5 @@
 import { Buffer } from "node:buffer";
+export { bufferPredicateProof } from "./buffer-predicates.js";
 import { EventEmitter, listenerCount } from "node:events";
 import { TextDecoder } from "node:util";
 import { gunzipSync, gzipSync } from "node:zlib";

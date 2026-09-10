@@ -10,6 +10,7 @@ from mojo_proof_node_capabilities import (
     stream_proof,
 )
 from mojo_proof_node_capabilities import buffer_allocation_proof
+from mojo_proof_node_capabilities import buffer_predicate_proof
 from mojo_proof_node_capabilities import stream_state_proof
 from mojo_proof_node_capabilities import (
     begin_stream_completion,
@@ -26,6 +27,7 @@ from tsonic_node.event_loop import run_event_loop
 def main() raises:
     assert_equal(path_glob_proof(), True)
     assert_equal(buffer_allocation_proof(), "caabbbdd|0000")
+    assert_equal(buffer_predicate_proof(), 2)
     assert_equal(compression_proof(), "payload")
     assert_equal(event_proof(), 11.0)
     assert_equal(event_ordering_proof(), 211.0)

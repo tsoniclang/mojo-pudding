@@ -6,6 +6,7 @@ export { templatePrimitiveProof } from "./template-primitives.js";
 export { restCollectionProof } from "./rest-collections.js";
 export { bufferValueProof } from "./buffer-values.js";
 export { assertionProof } from "./node-assertions.js";
+export { callbackOwnershipProof } from "./callback-ownership.js";
 export { liveSourceValueProof } from "./live-source-values.js";
 export { intlCollatorProof, intlDateTimeProof, intlNumberProof } from "./intl.js";
 export {

@@ -4,6 +4,7 @@ export { numericOperatorsProof, floatingBitwiseProof } from "./numeric.js";
 export { rawPointerSame, rawPointerHash, nativeByteCopy, nativeByteOffset } from "./pointers.js";
 export { optionalRegionProof } from "./optional-regions.js";
 export { callablePrefixProof, contextualPrefixProof } from "./callable-prefix.js";
+export { returnedCallableProof, nestedCaptureProof } from "./returned-callables.js";
 
 interface Pair {
   left: i32;

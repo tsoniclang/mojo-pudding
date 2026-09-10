@@ -38,3 +38,13 @@ writeFileSync("out/mojo/active.mojo", process.env.PROOF_MODE === "changed" ? Str
     assert.equal(result.status === 0, mode === "valid", `${mode}: ${result.stderr}`);
   }
 });
+
+test("worker proof declares both independently executed source roots", () => {
+  const project = JSON.parse(readFileSync(resolve(root, "packages/node-worker/tsonic.json"), "utf8"));
+  assert.deepEqual(project.rootFiles, ["App.ts", "child.ts"]);
+  assert.ok(project.rootFiles.includes(project.entryPoint));
+  for (const source of project.rootFiles) {
+    assert.ok(readFileSync(resolve(root, "packages/node-worker", project.rootDir, source), "utf8").length > 0);
+  }
+  assert.doesNotMatch(readFileSync(resolve(root, "packages/node-worker/src/App.ts"), "utf8"), /import\s+["']\.\/child/u);
+});

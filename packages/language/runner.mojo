@@ -15,6 +15,8 @@ from mojo_proof_language import (
     optional_region_proof,
     callable_prefix_proof,
     contextual_prefix_proof,
+    returned_callable_proof,
+    nested_capture_proof,
 )
 
 
@@ -26,6 +28,8 @@ def main() raises:
     assert_equal(optional_region_proof(), True)
     assert_equal(callable_prefix_proof(), Float64(212))
     assert_equal(contextual_prefix_proof(), Float64(9))
+    assert_equal(returned_callable_proof(), Float64(82))
+    assert_equal(nested_capture_proof(), Float64(101))
     var first_byte = UInt8(41)
     var second_byte = UInt8(0)
     var first_pointer = Pointer(to=first_byte).unsafe_origin_cast[MutUnsafeAnyOrigin]()
