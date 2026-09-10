@@ -4,7 +4,7 @@ from tsonic_node import RmOptions, read_text_file, remove_path
 from mojo_proof_node_capabilities import compression_proof, event_proof, event_ordering_proof, file_contents_proof, modern_url_proof, stream_proof
 from mojo_proof_node_capabilities import buffer_allocation_proof
 from mojo_proof_node_capabilities import stream_state_proof
-from mojo_proof_node_capabilities import begin_stream_completion
+from mojo_proof_node_capabilities import begin_stream_completion, begin_stream_failure
 from mojo_proof_node_capabilities import stream_read_sizes_proof
 from mojo_proof_node_capabilities import path_glob_proof
 from mojo_proof_node_capabilities import buffer_value_proof
@@ -35,6 +35,11 @@ def main() raises:
         run_event_loop()
         assert_equal(completion.call(()), "abz")
         assert_equal(read_text_file(root + "/completion"), "éAB")
+        var failure = begin_stream_failure(root)
+        assert_equal(failure.call(()), "")
+        run_event_loop()
+        assert_equal(failure.call(()), "abzec")
+        assert_equal(read_text_file(root + "/failed-completion"), "unchanged")
         assert_equal(stream_state_proof(root), "éa")
         assert_equal(file_contents_proof(root), "4100ff42|e9e900")
         var transfer = stream_proof(root)

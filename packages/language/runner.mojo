@@ -13,6 +13,8 @@ from mojo_proof_language import (
     native_byte_copy,
     native_byte_offset,
     optional_region_proof,
+    callable_prefix_proof,
+    contextual_prefix_proof,
 )
 
 
@@ -22,6 +24,8 @@ def main() raises:
     assert_equal(nested_finally_proof(False), 4)
     assert_equal(nested_finally_proof(True), 5)
     assert_equal(optional_region_proof(), True)
+    assert_equal(callable_prefix_proof(), Float64(212))
+    assert_equal(contextual_prefix_proof(), Float64(9))
     var first_byte = UInt8(41)
     var second_byte = UInt8(0)
     var first_pointer = Pointer(to=first_byte).unsafe_origin_cast[MutUnsafeAnyOrigin]()
