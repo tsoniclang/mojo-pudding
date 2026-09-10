@@ -7,11 +7,13 @@ from mojo_proof_node_capabilities import stream_state_proof
 from mojo_proof_node_capabilities import begin_stream_completion
 from mojo_proof_node_capabilities import stream_read_sizes_proof
 from mojo_proof_node_capabilities import path_glob_proof
+from mojo_proof_node_capabilities import buffer_value_proof
 from tsonic_node.event_loop import run_event_loop
 
 
 def main() raises:
     assert_equal(path_glob_proof(), True)
+    assert_equal(buffer_value_proof(), '{"type":"Buffer","data":[1,9,3]}|{"0":1,"1":9,"2":3}')
     assert_equal(buffer_allocation_proof(), "caabbbdd|0000")
     assert_equal(compression_proof(), "payload")
     assert_equal(event_proof(), 11.0)

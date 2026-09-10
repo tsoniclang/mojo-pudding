@@ -9,6 +9,7 @@ export { streamStateProof } from "./stream-state.js";
 export { beginStreamCompletion } from "./stream-completion.js";
 export { streamReadSizesProof } from "./stream-read-sizes.js";
 export { pathGlobProof } from "./path-glob.js";
+export { bufferValueProof } from "./buffer-values.js";
 
 export function compressionProof(): string {
   const compressed = gzipSync(Buffer.from("payload"), {
