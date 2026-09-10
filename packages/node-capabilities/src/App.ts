@@ -7,6 +7,7 @@ export { fileContentsProof } from "./file-contents.js";
 export { bufferAllocationProof } from "./buffer-allocation.js";
 export { streamStateProof } from "./stream-state.js";
 export { beginStreamCompletion, beginStreamFailure } from "./stream-completion.js";
+export { beginReadableEvents } from "./readable-events.js";
 export { streamReadSizesProof } from "./stream-read-sizes.js";
 export { pathGlobProof } from "./path-glob.js";
 export { bufferValueProof } from "./buffer-values.js";

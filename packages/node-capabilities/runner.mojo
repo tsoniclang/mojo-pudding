@@ -5,6 +5,7 @@ from mojo_proof_node_capabilities import compression_proof, event_proof, event_o
 from mojo_proof_node_capabilities import buffer_allocation_proof
 from mojo_proof_node_capabilities import stream_state_proof
 from mojo_proof_node_capabilities import begin_stream_completion, begin_stream_failure
+from mojo_proof_node_capabilities import begin_readable_events
 from mojo_proof_node_capabilities import stream_read_sizes_proof
 from mojo_proof_node_capabilities import path_glob_proof
 from mojo_proof_node_capabilities import buffer_value_proof
@@ -23,8 +24,16 @@ def main() raises:
     assert_equal(modern_url_proof(), "hello world|https://example.org/result")
     var root = mkdtemp(prefix="mojo-pudding-stream-")
     try:
-        assert_equal(stream_read_sizes_proof(root), "abc|def|gh")
-        assert_equal(stream_decoding_proof(root), "😀|é|Z")
+        var sizes = stream_read_sizes_proof(root)
+        var decoded = stream_decoding_proof(root)
+        run_event_loop()
+        assert_equal(sizes.call(()), "abc|def|gh")
+        assert_equal(decoded.call(()), "😀|é|Z")
+        var readers = begin_readable_events(root)
+        assert_equal(readers.call(()), "")
+        run_event_loop()
+        assert_equal(readers.call(()), "data:shared\nanswer:shared:end:close")
+        assert_equal(read_text_file(root + "/shared-output"), "shared\n")
         var answers = begin_readline(root)
         assert_equal(answers.call(()), "")
         run_event_loop()
