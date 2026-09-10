@@ -8,6 +8,7 @@ from mojo_proof_node_capabilities import begin_stream_completion
 from mojo_proof_node_capabilities import stream_read_sizes_proof
 from mojo_proof_node_capabilities import path_glob_proof
 from mojo_proof_node_capabilities import buffer_value_proof
+from mojo_proof_node_capabilities import stream_decoding_proof
 from tsonic_node.event_loop import run_event_loop
 
 
@@ -22,6 +23,7 @@ def main() raises:
     var root = mkdtemp(prefix="mojo-pudding-stream-")
     try:
         assert_equal(stream_read_sizes_proof(root), "abc|def|gh")
+        assert_equal(stream_decoding_proof(root), "😀|é|Z")
         var completion = begin_stream_completion(root)
         assert_equal(completion.call(()), "")
         run_event_loop()

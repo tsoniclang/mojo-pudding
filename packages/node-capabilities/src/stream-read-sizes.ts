@@ -11,6 +11,9 @@ export function streamReadSizesProof(root: string): string {
   if (first === null || second === null || tail === null || end !== null) {
     throw new Error("Sized stream lost its exact byte boundaries");
   }
+  if (typeof first === "string" || typeof second === "string" || typeof tail === "string") {
+    throw new Error("Binary stream unexpectedly returned decoded text");
+  }
   if (!source.readableEnded || source.bytesRead !== 8) {
     throw new Error("Sized stream lost its EOF or physical byte count");
   }
