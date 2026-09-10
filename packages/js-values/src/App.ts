@@ -1,4 +1,5 @@
 export { numericMutationProof, numericRegionProof } from "./numeric.js";
+export { runtimeCategoryProof } from "./runtime-categories.js";
 export { optionalArrayProof, optionalUnionMapProof } from "./optional-regions.js";
 export { templatePrimitiveProof } from "./template-primitives.js";
 export { restCollectionProof } from "./rest-collections.js";

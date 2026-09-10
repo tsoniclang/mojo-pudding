@@ -31,6 +31,8 @@ class Options {
 
 function preserve(value: unknown): unknown { return value; }
 
+function hasReads(options: Options, expected: number): boolean { return options.reads === expected; }
+
 export function liveSourceValueProof(): boolean {
   const record = { count: 1 };
   const saved: unknown = record;
@@ -58,8 +60,8 @@ export function liveSourceValueProof(): boolean {
   leaf.last = 4;
   if (JSON.stringify(savedBase) !== '{"first":1,"middle":2,"last":4}' || !Object.is(savedBase, retainBase(leaf))) return false;
   const options = new Options();
-  if (JSON.stringify(options) !== '{"own":1,"reads":0}' || options.reads !== 0) return false;
-  if (JSON.stringify(options, ["inherited", "own", "inherited"]) !== '{"inherited":2,"own":1}' || options.reads !== 1) return false;
+  if (JSON.stringify(options) !== '{"own":1,"reads":0}' || !hasReads(options, 0)) return false;
+  if (JSON.stringify(options, ["inherited", "own", "inherited"]) !== '{"inherited":2,"own":1}' || !hasReads(options, 1)) return false;
   const nested = { own: { keep: 2, drop: 3 }, keep: 4, drop: 5 };
   if (JSON.stringify(nested, ["own", "keep"]) !== '{"own":{"keep":2},"keep":4}') return false;
   const head = new Link();

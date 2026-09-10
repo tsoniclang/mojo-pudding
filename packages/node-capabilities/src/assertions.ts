@@ -21,7 +21,7 @@ class Link {
 }
 
 export function assertionProof(): boolean {
-  strictEqual(NaN, NaN);
+  strictEqual(Number.NaN, Number.NaN);
   notStrictEqual(-0, 0);
   const first = new Counter();
   const other = new Counter();
