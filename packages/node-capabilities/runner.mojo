@@ -10,7 +10,7 @@ from mojo_proof_node_capabilities import stream_read_sizes_proof
 from mojo_proof_node_capabilities import path_glob_proof
 from mojo_proof_node_capabilities import buffer_value_proof
 from mojo_proof_node_capabilities import stream_decoding_proof
-from mojo_proof_node_capabilities import begin_readline
+from mojo_proof_node_capabilities import begin_readline, begin_line_events
 from tsonic_node.event_loop import run_event_loop
 
 
@@ -39,6 +39,10 @@ def main() raises:
         run_event_loop()
         assert_equal(answers.call(()), "[😀][][last]")
         assert_equal(read_text_file(root + "/questions"), "first? second? third? ")
+        var lines = begin_line_events(root)
+        assert_equal(lines.call(()), "PR")
+        run_event_loop()
+        assert_equal(lines.call(()), "PRA[answer]L[]O[]L[😀]L[tail]PC")
         var completion = begin_stream_completion(root)
         assert_equal(completion.call(()), "")
         run_event_loop()
