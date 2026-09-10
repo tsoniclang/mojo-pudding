@@ -4,6 +4,8 @@ from tsonic_node import RmOptions, read_text_file, remove_path
 from mojo_proof_node_capabilities import compression_proof, event_proof, event_ordering_proof, file_contents_proof, modern_url_proof, stream_proof
 from mojo_proof_node_capabilities import buffer_allocation_proof
 from mojo_proof_node_capabilities import stream_state_proof
+from mojo_proof_node_capabilities import begin_stream_completion
+from tsonic_node.event_loop import run_event_loop
 
 
 def main() raises:
@@ -14,6 +16,11 @@ def main() raises:
     assert_equal(modern_url_proof(), "hello world|https://example.org/result")
     var root = mkdtemp(prefix="mojo-pudding-stream-")
     try:
+        var completion = begin_stream_completion(root)
+        assert_equal(completion.call(()), "")
+        run_event_loop()
+        assert_equal(completion.call(()), "abz")
+        assert_equal(read_text_file(root + "/completion"), "éAB")
         assert_equal(stream_state_proof(root), "éa")
         assert_equal(file_contents_proof(root), "4100ff42|e9e900")
         assert_equal(stream_proof(root), 33.0)

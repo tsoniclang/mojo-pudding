@@ -6,6 +6,7 @@ export { streamProof, modernUrlProof } from "./filesystem-url.js";
 export { fileContentsProof } from "./file-contents.js";
 export { bufferAllocationProof } from "./buffer-allocation.js";
 export { streamStateProof } from "./stream-state.js";
+export { beginStreamCompletion } from "./stream-completion.js";
 
 export function compressionProof(): string {
   const compressed = gzipSync(Buffer.from("payload"), {
