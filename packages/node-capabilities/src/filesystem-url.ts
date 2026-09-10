@@ -1,8 +1,12 @@
 import { Buffer } from "node:buffer";
-import { createReadStream, createWriteStream, watch, writeFileSync } from "node:fs";
+import { createReadStream, createWriteStream, existsSync, mkdirSync, rmdirSync, watch, writeFileSync } from "node:fs";
 import { format, URL, type UrlObject } from "node:url";
 
 export function streamProof(root: string): () => number {
+  const empty = root + "/empty";
+  mkdirSync(empty);
+  rmdirSync(empty);
+  if (existsSync(empty)) throw new Error("Empty directory was not removed");
   const path = root + "/input";
   writeFileSync(path, Buffer.from("bytes"));
   const source = createReadStream(path, { highWaterMark: 2, start: 1, end: 3 });
