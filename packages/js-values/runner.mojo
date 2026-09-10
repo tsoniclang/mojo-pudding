@@ -2,6 +2,7 @@ from std.testing import assert_equal
 import mojo_proof_js_values
 from mojo_proof_js_values import (
     runtime_category_proof,
+    structured_clone_proof,
     intl_collator_proof,
     intl_date_time_proof,
     intl_number_proof,
@@ -35,6 +36,7 @@ from mojo_proof_js_values import (
 
 def main() raises:
     assert_equal(runtime_category_proof(), True)
+    assert_equal(structured_clone_proof(), True)
     mojo_proof_js_values._initialize_tsonic_package()
     assert_equal(live_source_value_proof(), True)
     assert_equal(intl_collator_proof(), True)
