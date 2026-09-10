@@ -20,6 +20,7 @@ export function optionalBooleanProof(): boolean {
   if (optionalBooleanResult(undefined) !== "not|no") return false;
   if (optionalBooleanResult(false) !== "not|no") return false;
   if (optionalBooleanResult(true) !== "yes|yes") return false;
+  if (["", "😀", "text"].filter(value => value).length !== 2) return false;
   return unionBooleanResult(false) && !unionBooleanResult(true) &&
     unionBooleanResult("") && !unionBooleanResult("text");
 }
