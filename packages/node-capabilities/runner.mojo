@@ -11,10 +11,12 @@ from mojo_proof_node_capabilities import path_glob_proof
 from mojo_proof_node_capabilities import buffer_value_proof
 from mojo_proof_node_capabilities import stream_decoding_proof
 from mojo_proof_node_capabilities import begin_readline, begin_line_events
+from mojo_proof_node_capabilities import assertion_proof
 from tsonic_node.event_loop import run_event_loop
 
 
 def main() raises:
+    assert_equal(assertion_proof(), True)
     assert_equal(path_glob_proof(), True)
     assert_equal(buffer_value_proof(), '{"type":"Buffer","data":[1,9,3]}|{"0":1,"1":9,"2":3}')
     assert_equal(buffer_allocation_proof(), "caabbbdd|0000")
