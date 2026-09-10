@@ -37,7 +37,10 @@ def main() raises:
         assert_equal(read_text_file(root + "/completion"), "éAB")
         assert_equal(stream_state_proof(root), "éa")
         assert_equal(file_contents_proof(root), "4100ff42|e9e900")
-        assert_equal(stream_proof(root), 33.0)
+        var transfer = stream_proof(root)
+        assert_equal(transfer.call(()), 0.0)
+        run_event_loop()
+        assert_equal(transfer.call(()), 33.0)
         assert_equal(read_text_file(root + "/output"), "yte")
     finally:
         remove_path(root, RmOptions(recursive=True))

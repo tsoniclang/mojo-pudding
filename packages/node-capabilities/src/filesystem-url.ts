@@ -2,7 +2,7 @@ import { Buffer } from "node:buffer";
 import { createReadStream, createWriteStream, watch, writeFileSync } from "node:fs";
 import { format, URL, type UrlObject } from "node:url";
 
-export function streamProof(root: string): number {
+export function streamProof(root: string): () => number {
   const path = root + "/input";
   writeFileSync(path, Buffer.from("bytes"));
   const source = createReadStream(path, { highWaterMark: 2, start: 1, end: 3 });
@@ -11,7 +11,7 @@ export function streamProof(root: string): number {
   const watcher = watch(path);
   watcher.unref();
   watcher.close();
-  return source.bytesRead * 10 + output.bytesWritten;
+  return (): number => source.bytesRead * 10 + output.bytesWritten;
 }
 
 export function modernUrlProof(): string {
