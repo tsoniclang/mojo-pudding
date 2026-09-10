@@ -33,7 +33,7 @@ export function callbackOwnershipProof(): boolean {
   if (factory(false)() !== "ok") throw new Error("returned callback changed");
   let caught = "";
   try { factory(true)(); }
-  catch (error) { if (error instanceof Error) caught = error.message; }
+  catch (error) { caught = (error as Error).message; }
   if (caught !== "authored") throw new Error("returned callback error domain changed");
   const receiver = new Receiver();
   const read = receiver.reader()();

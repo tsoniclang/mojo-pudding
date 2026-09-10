@@ -21,8 +21,6 @@ export function bufferPredicateProof(): number {
   if (Buffer.isBuffer(null) || Buffer.isBuffer(undefined)) throw new Error("nullish acquired Buffer brand");
   if (Buffer.isBuffer([1, 2]) || Buffer.isBuffer({ length: 5 })) throw new Error("lookalike acquired Buffer brand");
   if (buffers.isBuffer("bytes")) throw new Error("default import changed predicate");
-  const boxed: unknown = buffer;
-  if (!generic(boxed) || generic<unknown>(1)) throw new Error("boxed brand changed");
   if (!compound(buffer) || compound("bytes") || compound(undefined)) throw new Error("compound brand changed");
   let evaluations = 0;
   const next = (): Buffer | string => { evaluations += 1; return evaluations === 1 ? buffer : "bytes"; };

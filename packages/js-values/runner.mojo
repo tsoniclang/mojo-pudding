@@ -38,9 +38,9 @@ from mojo_proof_js_values import (
 
 
 def main() raises:
+    mojo_proof_js_values._initialize_tsonic_package()
     assert_equal(runtime_category_proof(), True)
     assert_equal(structured_clone_proof(), True)
-    mojo_proof_js_values._initialize_tsonic_package()
     assert_equal(assertion_proof(), True)
     assert_equal(callback_ownership_proof(), True)
     assert_equal(
