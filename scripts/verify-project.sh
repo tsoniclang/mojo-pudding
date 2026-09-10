@@ -43,8 +43,8 @@ if [[ -d "$output/build/components" ]]; then
   done < <(find "$output/build/components" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z)
 fi
 case "$project" in
-  js|js-values|regexp-unicode) includes+=(-I "$REPO_ROOT/../mojo-js/mojo") ;;
-  node|node-capabilities)
+  js|regexp-unicode) includes+=(-I "$REPO_ROOT/../mojo-js/mojo") ;;
+  js-values|node|node-capabilities)
     includes+=(-I "$REPO_ROOT/../mojo-js/mojo" -I "$REPO_ROOT/../mojo-nodejs/mojo") ;;
 esac
 conda_prefix="$($PIXI_BIN run --manifest-path "$output/pixi.toml" printenv CONDA_PREFIX)"

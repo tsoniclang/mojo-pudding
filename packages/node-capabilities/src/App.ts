@@ -10,10 +10,8 @@ export { beginStreamCompletion, beginStreamFailure } from "./stream-completion.j
 export { beginReadableEvents } from "./readable-events.js";
 export { streamReadSizesProof } from "./stream-read-sizes.js";
 export { pathGlobProof } from "./path-glob.js";
-export { bufferValueProof } from "./buffer-values.js";
 export { streamDecodingProof } from "./stream-decoding.js";
 export { beginReadline, beginLineEvents } from "./readline.js";
-export { assertionProof } from "./assertions.js";
 
 export function compressionProof(): string {
   const compressed = gzipSync(Buffer.from("payload"), {

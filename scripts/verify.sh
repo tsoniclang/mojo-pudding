@@ -4,24 +4,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 mkdir -p .temp/verification
-
-generated_digest() {
-  find "$REPO_ROOT/packages/$1/out/mojo" \( -name '*.mojo' -o -name 'pixi.toml' \) \
-    -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | cut -d' ' -f1
-}
-
-verify_generation() (
-  set -e
-  project="$1"
-  timeout "${MOJO_SOURCE_TIMEOUT:-3m}" npm --prefix "$REPO_ROOT" --workspace "packages/$project" run build
-  first_generation="$(generated_digest "$project")"
-  timeout "${MOJO_SOURCE_TIMEOUT:-3m}" npm --prefix "$REPO_ROOT" --workspace "packages/$project" run build
-  second_generation="$(generated_digest "$project")"
-  if [[ "$first_generation" != "$second_generation" ]]; then
-    printf 'Mojo target generation is not byte-deterministic: %s\n' "$project" >&2
-    exit 1
-  fi
-)
+node --test scripts/test/verify-generation.test.mjs
 
 failed=0
 for project in \
@@ -38,7 +21,7 @@ for project in \
   node-capabilities \
   node-worker; do
   log="$REPO_ROOT/.temp/verification/$project.log"
-  if ! verify_generation "$project" >"$REPO_ROOT/.temp/verification/$project-source.log" 2>&1; then
+  if ! bash "$REPO_ROOT/scripts/verify-generation.sh" "$REPO_ROOT/packages/$project" >"$REPO_ROOT/.temp/verification/$project-source.log" 2>&1; then
     echo "FAIL: $project source generation ($REPO_ROOT/.temp/verification/$project-source.log)"
     failed=$((failed + 1))
     continue

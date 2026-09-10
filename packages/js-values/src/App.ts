@@ -4,6 +4,8 @@ export { structuredCloneProof } from "./structured-clone.js";
 export { optionalArrayProof, optionalUnionMapProof } from "./optional-regions.js";
 export { templatePrimitiveProof } from "./template-primitives.js";
 export { restCollectionProof } from "./rest-collections.js";
+export { bufferValueProof } from "./buffer-values.js";
+export { assertionProof } from "./node-assertions.js";
 export { liveSourceValueProof } from "./live-source-values.js";
 export { intlCollatorProof, intlDateTimeProof, intlNumberProof } from "./intl.js";
 export {

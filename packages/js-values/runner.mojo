@@ -1,6 +1,8 @@
 from std.testing import assert_equal
 import mojo_proof_js_values
 from mojo_proof_js_values import (
+    assertion_proof,
+    buffer_value_proof,
     runtime_category_proof,
     structured_clone_proof,
     intl_collator_proof,
@@ -38,6 +40,11 @@ def main() raises:
     assert_equal(runtime_category_proof(), True)
     assert_equal(structured_clone_proof(), True)
     mojo_proof_js_values._initialize_tsonic_package()
+    assert_equal(assertion_proof(), True)
+    assert_equal(
+        buffer_value_proof(),
+        '{"type":"Buffer","data":[1,9,3]}|{"0":1,"1":9,"2":3}',
+    )
     assert_equal(live_source_value_proof(), True)
     assert_equal(intl_collator_proof(), True)
     assert_equal(intl_date_time_proof(), True)
