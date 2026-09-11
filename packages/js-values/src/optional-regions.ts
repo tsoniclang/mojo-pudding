@@ -1,3 +1,5 @@
+import type { int32 } from "@tsonic/core/types.js";
+
 function optionalElement(values: number[] | undefined, index: () => number): number {
   return values?.[index()] ?? -1;
 }
@@ -16,7 +18,18 @@ function unionBooleanResult(value: boolean | string): boolean {
   return !value;
 }
 
+function optionalIntegerRange(value: int32 | undefined): boolean {
+  return value !== undefined && value >= 0 && value < 10;
+}
+
+function optionalIntegerInvalid(value: int32 | undefined): boolean {
+  return value === undefined || value <= 0;
+}
+
 export function optionalBooleanProof(): boolean {
+  if (optionalIntegerRange(undefined) || optionalIntegerRange(-1) || optionalIntegerRange(10)) return false;
+  if (!optionalIntegerRange(0) || !optionalIntegerRange(9)) return false;
+  if (!optionalIntegerInvalid(undefined) || !optionalIntegerInvalid(0) || optionalIntegerInvalid(1)) return false;
   if (optionalBooleanResult(undefined) !== "not|no") return false;
   if (optionalBooleanResult(false) !== "not|no") return false;
   if (optionalBooleanResult(true) !== "yes|yes") return false;
