@@ -8,6 +8,9 @@ export { callablePrefixProof, contextualPrefixProof } from "./callable-prefix.js
 export { returnedCallableProof, nestedCaptureProof } from "./returned-callables.js";
 export { mutationResultProof } from "./mutation-results.js";
 export { memberNamesProof } from "./member-names.js";
+export { bigintValuesProof, bigintErrorProof } from "./bigint-values.js";
+export { staticMethodValuesProof } from "./static-method-values.js";
+export { unionFieldMutationsProof } from "./union-field-mutations.js";
 
 interface Pair {
   left: i32;
