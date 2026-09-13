@@ -1,9 +1,14 @@
 import { Buffer } from "node:buffer";
 
+function generic<Value>(value: Value): boolean {
+  return Buffer.isBuffer(value);
+}
+
 export function bufferValueProof(): string {
   const buffer = Buffer.from([1, 2, 3]);
   const saved: unknown = buffer;
   const alias: unknown = buffer;
+  if (!generic(saved) || generic<unknown>(1)) throw new Error("Boxed generic brand changed");
   buffer[1] = 9;
   if (!Buffer.isBuffer(saved) || !Object.is(saved, alias)) throw new Error("Lost Buffer identity");
   const copy = structuredClone(saved);

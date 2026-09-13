@@ -4,6 +4,7 @@ from tsonic_runtime import RawPointer
 from mojo_proof_language import (
     _initialize_tsonic_package,
     language_proof,
+    typed_location_proof,
     nested_finally_proof,
     nested_invocation_error_proof,
     numeric_operators_proof,
@@ -13,19 +14,32 @@ from mojo_proof_language import (
     native_byte_copy,
     native_byte_offset,
     optional_region_proof,
+    callable_prefix_proof,
+    contextual_prefix_proof,
+    returned_callable_proof,
+    nested_capture_proof,
 )
 
 
 def main() raises:
     _initialize_tsonic_package()
     assert_equal(language_proof(), 17)
+    assert_equal(typed_location_proof(), True)
     assert_equal(nested_finally_proof(False), 4)
     assert_equal(nested_finally_proof(True), 5)
     assert_equal(optional_region_proof(), True)
+    assert_equal(callable_prefix_proof(), Float64(212))
+    assert_equal(contextual_prefix_proof(), Float64(9))
+    assert_equal(returned_callable_proof(), Float64(82))
+    assert_equal(nested_capture_proof(), Float64(101))
     var first_byte = UInt8(41)
     var second_byte = UInt8(0)
-    var first_pointer = Pointer(to=first_byte).unsafe_origin_cast[MutUnsafeAnyOrigin]()
-    var second_pointer = Pointer(to=second_byte).unsafe_origin_cast[MutUnsafeAnyOrigin]()
+    var first_pointer = Pointer(to=first_byte).unsafe_origin_cast[
+        MutUnsafeAnyOrigin
+    ]()
+    var second_pointer = Pointer(to=second_byte).unsafe_origin_cast[
+        MutUnsafeAnyOrigin
+    ]()
     assert_equal(native_byte_copy(first_pointer, second_pointer), UInt8(41))
     assert_equal(second_byte, UInt8(41))
     assert_equal(native_byte_offset(first_pointer, 0), first_pointer)
@@ -38,11 +52,23 @@ def main() raises:
     assert_equal(raw_pointer_same(first_address, absent_address), False)
     assert_equal(raw_pointer_same(absent_address, first_address), False)
     assert_equal(raw_pointer_same(absent_address, absent_address), True)
-    assert_equal(raw_pointer_hash(first_address), raw_pointer_hash(same_address))
+    assert_equal(
+        raw_pointer_hash(first_address), raw_pointer_hash(same_address)
+    )
     assert_equal(raw_pointer_hash(absent_address), Float64(0))
     var bitwise = numeric_operators_proof(-1.0, 1.0)
-    assert_equal(floating_bitwise_proof(Float16(-1), Float32(1)), Float64(2147483647))
-    var expected: List[Float64] = [0.0, 1.0, -1.0, -2.0, -2.0, -1.0, 2147483647.0]
+    assert_equal(
+        floating_bitwise_proof(Float16(-1), Float32(1)), Float64(2147483647)
+    )
+    var expected: List[Float64] = [
+        0.0,
+        1.0,
+        -1.0,
+        -2.0,
+        -2.0,
+        -1.0,
+        2147483647.0,
+    ]
     for index in range(len(expected)):
         assert_equal(bitwise[index], expected[index])
     for shape in range(5):
@@ -50,5 +76,9 @@ def main() raises:
         assert_equal(nested_invocation_error_proof(1.0, Float64(shape)), 1201.0)
         assert_equal(nested_invocation_error_proof(2.0, Float64(shape)), 1202.0)
         assert_equal(nested_invocation_error_proof(3.0, Float64(shape)), 103.0)
-        assert_equal(nested_invocation_error_proof(-1.0, Float64(shape)), 1201.0)
-        assert_equal(nested_invocation_error_proof(-2.0, Float64(shape)), 1202.0)
+        assert_equal(
+            nested_invocation_error_proof(-1.0, Float64(shape)), 1201.0
+        )
+        assert_equal(
+            nested_invocation_error_proof(-2.0, Float64(shape)), 1202.0
+        )

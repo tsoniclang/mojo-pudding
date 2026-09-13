@@ -22,3 +22,25 @@ export function beginReadline(root: string): () => string {
   });
   return (): string => trace;
 }
+
+export function beginLineEvents(root: string): () => string {
+  const path = root + "/line-events";
+  writeFileSync(path, "answer\n\n😀\ntail");
+  const input = createReadStream(path, { highWaterMark: 1 });
+  const lines = createInterface({ input });
+  let trace = "";
+  const listener = (line: string): void => { trace += "L[" + line + "]"; };
+  const alias = lines.on("line", listener);
+  alias.on("line", listener);
+  lines.off("line", listener);
+  lines.once("line", line => { trace += "O[" + line + "]"; });
+  lines.on("pause", () => { trace += "P"; });
+  lines.on("resume", () => { trace += "R"; });
+  lines.once("close", () => { trace += "C"; });
+  lines.pause();
+  lines.pause();
+  lines.resume();
+  lines.resume();
+  lines.question("", answer => { trace += "A[" + answer + "]"; });
+  return (): string => trace;
+}

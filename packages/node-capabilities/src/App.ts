@@ -1,4 +1,5 @@
 import { Buffer } from "node:buffer";
+export { bufferPredicateProof } from "./buffer-predicates.js";
 import { EventEmitter, listenerCount } from "node:events";
 import { TextDecoder } from "node:util";
 import { gunzipSync, gzipSync } from "node:zlib";
@@ -6,12 +7,12 @@ export { streamProof, modernUrlProof } from "./filesystem-url.js";
 export { fileContentsProof } from "./file-contents.js";
 export { bufferAllocationProof } from "./buffer-allocation.js";
 export { streamStateProof } from "./stream-state.js";
-export { beginStreamCompletion } from "./stream-completion.js";
+export { beginStreamCompletion, beginStreamFailure } from "./stream-completion.js";
+export { beginReadableEvents } from "./readable-events.js";
 export { streamReadSizesProof } from "./stream-read-sizes.js";
 export { pathGlobProof } from "./path-glob.js";
-export { bufferValueProof } from "./buffer-values.js";
 export { streamDecodingProof } from "./stream-decoding.js";
-export { beginReadline } from "./readline.js";
+export { beginReadline, beginLineEvents } from "./readline.js";
 
 export function compressionProof(): string {
   const compressed = gzipSync(Buffer.from("payload"), {
