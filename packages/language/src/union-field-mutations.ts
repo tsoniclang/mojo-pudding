@@ -2,6 +2,7 @@ class First { value: number = 1; first: boolean = true; }
 class Second { value: number = 2; second: string = "second"; }
 class Third { third: boolean = true; }
 let events: string = "";
+function readEvents(): string { return events; }
 
 function receiver(value: First | Second): First | Second { events += "r"; return value; }
 function next(): number { events += "v"; return 3; }
@@ -22,7 +23,7 @@ export function unionFieldMutationsProof(): boolean {
   return change(first) && change(second) && first.value === 6 && second.value === 7 &&
     receiverRebinding(first, second) && narrowedMutation(new First()) &&
     narrowedMutation(new Second()) && narrowedMutation(new Third()) &&
-    computedReceiver(new First(), new Second());
+    computedReceiver(new First(), new Second()) && optionalReceiverProof();
 }
 
 function receiverRebinding(first: First, second: Second): boolean {
@@ -49,4 +50,35 @@ function computedReceiver(first: First, second: Second): boolean {
   current = receiver(first);
   const assigned = current[(current = second, "value")] += (current = first, 5);
   return assigned === 6 && first.value === 6 && second.value === 2 && current === first;
+}
+
+function optionalRead(value: First | Second | Third | null | undefined): number {
+  if (value instanceof Third) return 0;
+  return value?.[(events += "k", "value")] ?? 0;
+}
+
+function optionalReceiverProof(): boolean {
+  events = "";
+  if (optionalRead(null) !== 0 || optionalRead(undefined) !== 0 ||
+    optionalRead(new Third()) !== 0 || readEvents() !== "") return false;
+  if (optionalRead(new First()) !== 1 || optionalRead(new Second()) !== 2 || readEvents() !== "kk") return false;
+  let current: First | Second | undefined = receiver(new First());
+  const observed = current?.[(current = undefined, "value")];
+  return observed === 1 && current === undefined && nestedOptionalProof();
+}
+
+class Box { item: First | Second | null = null; }
+
+function nestedOptional(box: Box | undefined): number {
+  return box?.item?.[(events += "n", "value")] ?? 0;
+}
+
+function nestedOptionalProof(): boolean {
+  events = "";
+  const box = new Box();
+  if (nestedOptional(undefined) !== 0 || nestedOptional(box) !== 0 || readEvents() !== "") return false;
+  box.item = new First();
+  if (nestedOptional(box) !== 1 || readEvents() !== "n") return false;
+  box.item = new Second();
+  return nestedOptional(box) === 2 && readEvents() === "nn";
 }
