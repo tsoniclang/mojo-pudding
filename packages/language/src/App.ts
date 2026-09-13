@@ -6,6 +6,8 @@ export { rawPointerSame, rawPointerHash, nativeByteCopy, nativeByteOffset } from
 export { optionalRegionProof } from "./optional-regions.js";
 export { callablePrefixProof, contextualPrefixProof } from "./callable-prefix.js";
 export { returnedCallableProof, nestedCaptureProof } from "./returned-callables.js";
+export { mutationResultProof } from "./mutation-results.js";
+export { memberNamesProof } from "./member-names.js";
 
 interface Pair {
   left: i32;
