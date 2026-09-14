@@ -12,6 +12,7 @@ export { intlCollatorProof, intlDateTimeProof, intlNumberProof } from "./intl.js
 export {
   arrayStringificationProof, arrayOrderingProof, arrayCopyProof, arrayIndexProof,
   arrayMutationProof,
+  sparseArrayProof, iterableSpreadProof,
 } from "./array-semantics.js";
 
 class JsonBox {

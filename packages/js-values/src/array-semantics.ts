@@ -66,3 +66,26 @@ export function arrayMutationProof(): boolean {
   return visited === "23" && mapped.length === 3 && mapped.join("|") === "1||" &&
     found === 1 && changed[0] === 99 && copied.join("|") === "1|2|3";
 }
+
+export function sparseArrayProof(): boolean {
+  const sparse = [1, , undefined, 3];
+  if (sparse.length !== 4 || Object.hasOwn(sparse, "1") || !Object.hasOwn(sparse, "2")) return false;
+  const copied = [...sparse];
+  if (!Object.hasOwn(copied, "1") || copied[1] !== undefined || copied[2] !== undefined) return false;
+  let visits = 0;
+  sparse.forEach(() => { visits += 1; });
+  if (visits !== 3 || sparse.join("|") !== "1|||3") return false;
+  const prefixed = [, ...copied, , 5,];
+  return prefixed.length === 7 && !Object.hasOwn(prefixed, "0") && !Object.hasOwn(prefixed, "5") &&
+    Object.hasOwn(prefixed, "2") && prefixed[6] === 5 && [,,,].length === 3;
+}
+
+export function iterableSpreadProof(): boolean {
+  const values = [...new Set([1, 2, 1]), ...new Set([3, 4]).values()];
+  const map = new Map<string, number>();
+  map.set("first", 7);
+  map.set("second", 9);
+  const entries = [...map];
+  return values.join("|") === "1|2|3|4" && entries.length === 2 &&
+    entries[0][0] === "first" && entries[0][1] === 7 && entries[1][1] === 9;
+}

@@ -19,6 +19,8 @@ from mojo_proof_js_values import (
     array_copy_proof,
     array_index_proof,
     array_mutation_proof,
+    sparse_array_proof,
+    iterable_spread_proof,
     argument_assignment_proof,
     argument_value_proof,
     erased_callback_bridge_proof,
@@ -73,6 +75,8 @@ def main() raises:
     assert_equal(array_copy_proof(), True)
     assert_equal(array_index_proof(), True)
     assert_equal(array_mutation_proof(), True)
+    assert_equal(sparse_array_proof(), True)
+    assert_equal(iterable_spread_proof(), True)
     assert_equal(conversion_effects_proof(), True)
     assert_equal(string_boundary_proof(), True)
     assert_equal(live_iterator_proof(), "one|updated|again")

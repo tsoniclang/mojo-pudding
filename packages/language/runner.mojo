@@ -18,12 +18,24 @@ from mojo_proof_language import (
     contextual_prefix_proof,
     returned_callable_proof,
     nested_capture_proof,
+    mutation_result_proof,
+    member_names_proof,
+    bigint_values_proof,
+    bigint_error_proof,
+    static_method_values_proof,
+    union_field_mutations_proof,
 )
 
 
 def main() raises:
     _initialize_tsonic_package()
     assert_equal(language_proof(), 17)
+    assert_equal(mutation_result_proof(), True)
+    assert_equal(member_names_proof(), True)
+    assert_equal(bigint_values_proof(), True)
+    assert_equal(bigint_error_proof(), True)
+    assert_equal(static_method_values_proof(), True)
+    assert_equal(union_field_mutations_proof(), True)
     assert_equal(typed_location_proof(), True)
     assert_equal(nested_finally_proof(False), 4)
     assert_equal(nested_finally_proof(True), 5)
